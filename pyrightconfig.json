@@ -1,0 +1,17 @@
+{
+  "include": [
+    "."
+  ],
+  "venvPath": ".",
+  "venv": "cardiac_vr_env",
+  "pythonVersion": "3.13",
+  "typeCheckingMode": "basic",
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "."
+      ]
+    }
+  ]
+}
