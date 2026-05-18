@@ -1,0 +1,62 @@
+# config.yaml — ALL paths and hyperparameters live here. Never hard-code absolute paths.
+
+# ── Paths ─────────────────────────────────────────────────────────────────────
+paths:
+  data_root: data/
+  interim:   interim/
+  models:    models/
+  logs:      runs/
+
+  # Intern 2 specific
+  echonet_dir:   data/echonet/
+  camus_dir:     data/camus/
+  ecg_tensors:   interim/ecg_tensors.npz       # handed off by Intern 1
+  ecg_metadata:  interim/ecg_metadata.csv       # handed off by Intern 1
+  ecg_model:     models/ecg_resnet1d.pt         # handed off by Intern 1
+  echo_tensors:  interim/echo_tensors.pt
+  base_model:    models/base_model.pt
+  base_scores:   interim/base_scores/
+  heatmaps:      interim/heatmaps/
+
+# ── Echo data parameters ───────────────────────────────────────────────────────
+echo:
+  frame_size: 224           # pixels — EfficientNet-B3 input
+  imagenet_mean: [0.485, 0.456, 0.406]
+  imagenet_std:  [0.229, 0.224, 0.225]
+
+  # Clinical EF thresholds (ASE guidelines)
+  ef_normal_min: 50         # EF >= 50 → Normal (class 0)
+  ef_mild_min:   40         # EF 40-49 → Mild (class 1)
+  # EF < 40 → Severe (class 2)
+
+# ── Model hyperparameters ──────────────────────────────────────────────────────
+model:
+  echo_encoder:
+    backbone:       efficientnet_b3
+    pretrained:     true
+    freeze_backbone: false   # set true for first warm-up epoch
+    proj_dim:       512
+
+  fusion:
+    embed_dim:      512
+    num_heads:      8
+    dropout:        0.3
+
+# ── Training ───────────────────────────────────────────────────────────────────
+training:
+  seed:             42
+  batch_size:       16
+  num_epochs:       40
+  learning_rate:    1.0e-3
+  weight_decay:     1.0e-4
+  scheduler:        onecycle
+  loss_ce_weight:   1.0
+  loss_mse_weight:  0.5       # weight for EF regression auxiliary loss
+  test_size:        0.15
+  val_size:         0.176     # of remaining trainval, to get 15% of total
+
+# ── Explainability ─────────────────────────────────────────────────────────────
+xai:
+  grad_cam_layer:   features   # last conv block of EfficientNet
+  shap_sample_size: 100
+  top_k_features:   5

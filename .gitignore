@@ -1,3 +1,4 @@
+
 .venv/
 data/
 __pycache__/
@@ -6,3 +7,37 @@ models/*.pt
 .ipynb_checkpoints/
 interim/
 .env
+# Data — never commit raw datasets
+data/
+interim/*.npz
+interim/*.pt
+interim/*.parquet
+
+# Model checkpoints
+models/*.pt
+models/*.pth
+models/*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+cardiac_vr_env/
+*.env
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.pem
+*.key
+>>>>>>> faa44997879ff2d24d01d93664e955d18a85e44a
