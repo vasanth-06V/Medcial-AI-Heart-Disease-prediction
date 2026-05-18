@@ -1,1 +1,1 @@
-# pyrefly: ignore [missing-import]
+# Intern 2 — Echo + Base Model Fusion package
